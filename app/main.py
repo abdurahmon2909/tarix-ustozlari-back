@@ -20,9 +20,6 @@ from app.core.handlers import (
     app_exception_handler
 )
 
-from app.websockets.battle import (
-    router as battle_ws_router
-)
 
 from app.core.rate_limit import (
     rate_limit_middleware
@@ -48,9 +45,6 @@ app.include_router(
     prefix="/api/v1"
 )
 
-app.include_router(
-    battle_ws_router
-)
 
 
 @app.get("/")
