@@ -1,4 +1,9 @@
 from fastapi import FastAPI
+
+from fastapi.middleware.cors import (
+    CORSMiddleware
+)
+
 from app.models.book import Book
 from app.models.chapter import Chapter
 from app.models.question import Question
@@ -15,11 +20,15 @@ from app.models.user_answer import (
 from app.models.notification import (
     Notification
 )
+
 from app.core.config import (
     settings
 )
+
 from app.core.database import engine
+
 from app.models.base import Base
+
 from app.core.version import (
     API_VERSION
 )
@@ -36,16 +45,23 @@ from app.core.handlers import (
     app_exception_handler
 )
 
-
 from app.core.rate_limit import (
     rate_limit_middleware
 )
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-
     version=API_VERSION
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 Base.metadata.create_all(bind=engine)
 
 app.middleware("http")(
@@ -61,8 +77,6 @@ app.include_router(
     api_router,
     prefix="/api/v1"
 )
-
-
 
 @app.get("/")
 async def root():
