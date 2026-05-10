@@ -3,7 +3,8 @@ from fastapi import FastAPI
 from app.core.config import (
     settings
 )
-
+from app.core.database import engine
+from app.models.base import Base
 from app.core.version import (
     API_VERSION
 )
@@ -30,6 +31,7 @@ app = FastAPI(
 
     version=API_VERSION
 )
+Base.metadata.create_all(bind=engine)
 
 app.middleware("http")(
     rate_limit_middleware
