@@ -12,7 +12,6 @@ from app.api.v1.endpoints import (
     ai,
     daily,
     seed,
-    admin,
     arena,
     notifications
 )
