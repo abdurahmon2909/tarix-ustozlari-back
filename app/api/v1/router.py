@@ -94,13 +94,6 @@ api_router.include_router(
     prefix="/seed",
     tags=["Seed"]
 )
-
-# ADMIN
-api_router.include_router(
-    admin.router,
-    prefix="/admin",
-    tags=["Admin"]
-)
 api_router.include_router(
     arena.router,
     prefix="/arena",
