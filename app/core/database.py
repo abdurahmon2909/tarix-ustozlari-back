@@ -12,8 +12,26 @@ from app.core.config import (
     settings
 )
 
-engine = create_engine(
+DATABASE_URL = (
     settings.DATABASE_URL
+)
+
+# Railway postgres fix
+if DATABASE_URL.startswith(
+    "postgres://"
+):
+    DATABASE_URL = (
+        DATABASE_URL.replace(
+            "postgres://",
+            "postgresql+psycopg2://",
+            1
+        )
+    )
+
+engine = create_engine(
+    DATABASE_URL,
+
+    pool_pre_ping=True
 )
 
 SessionLocal = sessionmaker(
