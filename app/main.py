@@ -1,5 +1,20 @@
 from fastapi import FastAPI
-
+from app.models.book import Book
+from app.models.chapter import Chapter
+from app.models.question import Question
+from app.models.user import User
+from app.models.user_statistics import (
+    UserStatistics
+)
+from app.models.test_session import (
+    TestSession
+)
+from app.models.user_answer import (
+    UserAnswer
+)
+from app.models.notification import (
+    Notification
+)
 from app.core.config import (
     settings
 )
