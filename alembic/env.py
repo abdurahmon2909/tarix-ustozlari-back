@@ -6,9 +6,31 @@ from sqlalchemy import pool
 from alembic import context
 
 from app.core.database import Base
+
+from app.core.config import settings
+
 from app.models.user import User
 
 config = context.config
+
+# Railway DATABASE_URL override
+database_url = settings.DATABASE_URL
+
+if database_url.startswith(
+    "postgres://"
+):
+    database_url = (
+        database_url.replace(
+            "postgres://",
+            "postgresql+psycopg2://",
+            1
+        )
+    )
+
+config.set_main_option(
+    "sqlalchemy.url",
+    database_url
+)
 
 if config.config_file_name is not None:
     fileConfig(
